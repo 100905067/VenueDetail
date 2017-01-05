@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:divider="?android:dividerHorizontal"
-    android:showDividers="end">
+    android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:id="@id/visitorName"
-        android:paddingBottom="8dp"/>
+        android:padding="8dp"
+        android:textColor="@color/colorBlack"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:id="@id/visitorTiming"
-        android:paddingBottom="8dp"/>
+        android:padding="8dp"
+        android:textColor="@color/colorBlack"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBlack" />
 </LinearLayout>
