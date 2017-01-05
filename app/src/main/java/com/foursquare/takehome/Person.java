@@ -48,10 +48,16 @@ final public class Person implements Comparable<Person>{
     @Override
     public int compareTo(Person p) {
         long arrTime = p.getArriveTime();
+        long leaveTime = p.getLeaveTime();
         if (this.arriveTime < arrTime) {
             return 1;
         } else if (this.arriveTime == arrTime) {
-            return 0;
+                if(this.leaveTime < leaveTime)
+                    return 1;
+                else if (this.leaveTime == leaveTime)
+                    return 0;
+                else
+                    return -1;
         } else {
             return -1;
         }
