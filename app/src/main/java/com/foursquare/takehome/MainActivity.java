@@ -3,17 +3,21 @@ package com.foursquare.takehome;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rvRecyclerView;
     private PersonAdapter personAdapter;
+    private List<Person> pList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +25,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         rvRecyclerView = (RecyclerView) findViewById(R.id.rvRecyclerView);
-        personAdapter = new PersonAdapter();
+        rvRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        personAdapter = new PersonAdapter(pList);
+        rvRecyclerView.setAdapter(personAdapter);
 
         //TODO hook up your adapter and any additional logic here
 
@@ -50,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Venue venue) {
                 //TODO use the venue object to populate your recyclerview
+                List<Person> personVenueList = venue.getVisitors();
+                for(int i=0;i<personVenueList.size();i++) {
+                    pList.add(personVenueList.get(i));
+                }
             }
         }.execute();
     }
