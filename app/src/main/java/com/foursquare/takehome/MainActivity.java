@@ -33,10 +33,9 @@ public class MainActivity extends AppCompatActivity {
         rvRecyclerView = (RecyclerView) findViewById(R.id.rvRecyclerView);
         rvRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //TODO hook up your adapter and any additional logic here
         personAdapter = new PersonAdapter(pList, getApplicationContext());
         rvRecyclerView.setAdapter(personAdapter);
-
-        //TODO hook up your adapter and any additional logic here
 
         parseVenueFromResponse();
     }
@@ -64,14 +63,23 @@ public class MainActivity extends AppCompatActivity {
             protected void onPostExecute(Venue venue) {
                 //TODO use the venue object to populate your recyclerview
                 List<Person> personVenueList = venue.getVisitors();
+
+                //Ascend the list order by arrival time, leave time
                 Collections.sort(personVenueList, new Comparator<Person>() {
 
                     public int compare(Person p1, Person p2) {
                         return p2.compareTo(p1);
                     }
                 });
+
                 int count = personVenueList.size()+1;
                 long endTime = venue.getOpenTime();
+                /*Navigate through the list : if leave
+                time is lesser than next arrival time => the idle time [leave time, next arrival time) =>add to list
+                check for maximum leave time => to check overlapping intervals;
+                if(leave time > max (leave time)) => update max leave time
+                also check for closing section.
+                */
                 for(int i=0;i<personVenueList.size();i++) {
                     Person current = personVenueList.get(i);
                     if (endTime < current.getArriveTime())
